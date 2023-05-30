@@ -1,0 +1,42 @@
+@startuml
+class Schluesselgenerator {
+  -BigInteger p
+  -BigInteger q
+  -BigInteger g
+  -BigInteger e
+  -BigInteger d
+  -BigInteger phi_g
+  +Schluesselgenerator(BigInteger p, BigInteger q)
+  +void generateKeyPair()
+  +static boolean isPrime(BigInteger number)
+  +String printPublicKey()
+  +String printPrivateKey()
+}
+
+class Encoder {
+  -List<BigInteger> charValues
+  -BigInteger e
+  -BigInteger g
+  +Encoder(BigInteger e, BigInteger g)
+  -void readFile(String fileName)
+  +List<BigInteger> getCharValues()
+  +void encode(String fileName)
+  -void writeToFile(String fileName)
+}
+
+class Decoder {
+  -BigInteger d
+  -BigInteger g
+  +Decoder(BigInteger d, BigInteger g)
+  +void printDecoded(List<BigInteger> entschluesseln)
+  +void decodeFile(String path)
+}
+
+class Main {
+    +static void main(String[] args)
+}
+
+Main ..> Schluesselgenerator : benutzt
+Main ..> Encoder : benutzt
+Main ..> Decoder : benutzt
+@enduml

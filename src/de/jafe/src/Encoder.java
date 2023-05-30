@@ -5,53 +5,80 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * Die Klasse Encoder ermöglicht das Verschlüsseln von Dateien.
+ * @author Jakob
+ */
 public class Encoder {
     private List<BigInteger> charValues;
-    private Schluesselgenerator schluesselgenerator;
+    private BigInteger e;
+    private BigInteger g;
 
-    public Encoder(Schluesselgenerator schluesselgenerator) {
-        this.schluesselgenerator = schluesselgenerator;
-        charValues = new ArrayList<>();
+    /**
+     * Konstruktor für die Klasse Encoder.
+     * @param e der Wert von e
+     * @param g der Wert von g
+     */
+    public Encoder(BigInteger e, BigInteger g) {
+        this.e = e;
+        this.g = g;
     }
 
-    public void readFile(String fileName) {
+    /**
+     * Liest eine Datei ein und speichert die Zeichenwerte in einer Liste.
+     * @param fileName der Name der Datei
+     */
+    private void readFile(String fileName) {
         try {
-            String content = new String(Files.readAllBytes(Paths.get(fileName)));
-            for (char c : content.toCharArray()) {
-                charValues.add(BigInteger.valueOf(c));
-            }
+            charValues = Files.readAllLines(Paths.get(fileName)).stream()
+                    .map(line -> line + System.lineSeparator()) // add new line character
+                    .map(line -> line.toCharArray())
+                    .flatMap(chars -> {
+                        List<BigInteger> charValues = new ArrayList<>();
+                        for (char c : chars) {
+                            charValues.add(BigInteger.valueOf(c));
+                        }
+                        return charValues.stream();
+                    })
+                    .collect(Collectors.toList());
         } catch (IOException e) {
-            System.out.println("Fehler beim Lesen der Datei: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
+    /**
+     * Gibt die Liste der Zeichenwerte zurück.
+     * @return die Liste der Zeichenwerte
+     */
     public List<BigInteger> getCharValues() {
         return charValues;
     }
-
-    public void printCharValues() {
-        for (BigInteger value : charValues) {
-            System.out.print(value+" ");
-        }
-        System.out.println();
-    }
-
-    public void encodeText() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Geben Sie den zu decodierenden Text ein:");
-        String input = scanner.nextLine();
-        for (char c : input.toCharArray()) {
-            charValues.add(BigInteger.valueOf(c));
-        }
-    }
-
-    public void encode() {
-        charValues=charValues.stream()
-                .map(value -> value.modPow(schluesselgenerator.getE(), schluesselgenerator.getG()))
+    /**
+     * Verschlüsselt eine Datei.
+     * @param fileName der Name der Datei
+     */
+    public void encode(String fileName) {
+        readFile(fileName);
+        charValues = charValues.stream()
+                .map(value -> value.modPow(e, g))
                 .collect(Collectors.toList());
+        writeToFile("Files/encoded.txt");
+    }
+
+    /**
+     * Schreibt die verschlüsselten Werte in eine Datei.
+     * @param fileName der Name der Datei
+     */
+    private void writeToFile(String fileName) {
+        try {
+            Files.write(Paths.get(fileName), charValues.stream()
+                    .map(BigInteger::toString)
+                    .collect(Collectors.toList()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
