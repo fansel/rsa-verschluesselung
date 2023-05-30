@@ -29,7 +29,7 @@ public class Schluesselgenerator {
     }
 
     public BigInteger getD() {
-        return d;
+        return this.d;
     }
 
     public BigInteger getG() {

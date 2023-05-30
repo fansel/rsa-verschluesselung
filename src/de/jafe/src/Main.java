@@ -7,10 +7,7 @@ public class Main {
         sg.generateKeyPair();
         Encoder en = new Encoder(sg);
         en.encodeText();
-        en.printCharValues();
         en.encode();
-        en.printCharValues();
-        System.out.println(sg.getD()+" G"+sg.getG());
         Decoder dc = new Decoder(sg);
         dc.printDecoded(en.getCharValues());
 
