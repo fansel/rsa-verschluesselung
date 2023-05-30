@@ -48,6 +48,10 @@ public class Decoder {
      * @param path der Pfad zur Datei
      */
     public void decodeFile(String path) {
+        if (!Files.exists(Paths.get(path))) {
+            System.out.println("Diese Datei existiert nicht!");
+            return;
+        }
         List<BigInteger> encodedValues = new ArrayList<>();
         List<BigInteger> decodedValues = new ArrayList<>();
         try (Stream<String> lines = Files.lines(Paths.get(path))) {

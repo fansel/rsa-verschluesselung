@@ -2,6 +2,7 @@ package de.jafe.src;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +32,14 @@ public class Encoder {
      * @param fileName der Name der Datei
      */
     private void readFile(String fileName) {
+        //check if file exists
+        Path path = Paths.get(fileName);
+        if (!Files.exists(path)) {
+            System.out.println("Diese Datei existiert nicht!");
+            return;
+        }
         try {
-            charValues = Files.readAllLines(Paths.get(fileName)).stream()
+            charValues = Files.readAllLines(path).stream()
                     .map(line -> line + System.lineSeparator()) // add new line character
                     .map(line -> line.toCharArray())
                     .flatMap(chars -> {

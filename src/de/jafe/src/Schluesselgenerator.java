@@ -43,20 +43,18 @@ public class Schluesselgenerator {
      * @param number die zu überprüfende Zahl
      * @return true, wenn die Zahl eine Primzahl ist, sonst false
      */
-    public static boolean isPrime(BigInteger number){
-
-        if(number == BigInteger.ONE || number == BigInteger.ZERO){
+    public static boolean isPrime(BigInteger number) {
+        if (number.equals(BigInteger.ONE) || number.equals(BigInteger.ZERO)) {
             return false;
         }
-
-        for(BigInteger i = BigInteger.valueOf(2); i.compareTo(number.divide(BigInteger.valueOf(2))) < 0; i = i.add(BigInteger.ONE)){
-            if(number.mod(i) == BigInteger.ZERO){
+        for (BigInteger i = BigInteger.valueOf(2); i.compareTo(number.sqrt()) <= 0; i = i.add(BigInteger.ONE)) {
+            if (number.mod(i).equals(BigInteger.ZERO)) {
                 return false;
             }
         }
-
         return true;
     }
+
 
     /**
      * Gibt den öffentlichen Schlüssel als String zurück.
