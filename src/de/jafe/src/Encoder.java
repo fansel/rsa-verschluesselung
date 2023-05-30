@@ -68,10 +68,13 @@ public class Encoder {
      */
     public void encode(String fileName) {
         readFile(fileName);
+        if (charValues == null) {
+            return;
+        }
         charValues = charValues.stream()
                 .map(value -> value.modPow(e, g))
                 .collect(Collectors.toList());
-        writeToFile("Files/encoded.txt");
+        writeToFile("Files/encoded.enc");
     }
 
     /**

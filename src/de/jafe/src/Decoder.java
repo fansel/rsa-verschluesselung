@@ -48,8 +48,14 @@ public class Decoder {
      * @param path der Pfad zur Datei
      */
     public void decodeFile(String path) {
+
+
         if (!Files.exists(Paths.get(path))) {
             System.out.println("Diese Datei existiert nicht!");
+            return;
+        }
+        if (!path.endsWith(".enc")) {
+            System.out.println("Diese Datei kann nicht entschlüsselt werden!");
             return;
         }
         List<BigInteger> encodedValues = new ArrayList<>();
@@ -67,5 +73,8 @@ public class Decoder {
                 .collect(Collectors.toList());
         printDecoded(decodedValues);
     }
+
+
+
 
 }
