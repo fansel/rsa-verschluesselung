@@ -38,6 +38,7 @@ public class Schluesselgenerator {
     }
 
 
+
     /**
      * Überprüft, ob eine Zahl eine Primzahl ist.
      * @param number die zu überprüfende Zahl
@@ -53,6 +54,14 @@ public class Schluesselgenerator {
             }
         }
         return true;
+    }
+
+    /**
+     * Generiert eine zufällige Primzahl der Bitlänge 512.
+     * @return eine zufällige Primzahl der Bitlänge 512
+     */
+    public static BigInteger generateProbablePrime(){
+        return BigInteger.probablePrime(512, new java.util.Random());
     }
 
 

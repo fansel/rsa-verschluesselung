@@ -20,24 +20,37 @@ public class Main {
                     "3) oder das Programm beenden(4)?");
 
             if (choice == 1) {
+                int choice2 = UserInterface.in.requestInt("Wollen Sie die Primzahlen selbst eingeben(1) oder sollen sie generiert werden(2)?");
                 BigInteger p = BigInteger.valueOf(1);
-                while (!Schluesselgenerator.isPrime(p)) {
-                    p = UserInterface.in.requestBigInt("Geben Sie die Primzahl P ein");
-                    if (!Schluesselgenerator.isPrime(p))
-                        System.out.println(p + " ist keine Primzahl");
-                }
                 BigInteger q = BigInteger.valueOf(1);
-                while (!Schluesselgenerator.isPrime(q)) {
-                    q = UserInterface.in.requestBigInt("Geben Sie die Primzahl Q ein");
-                    if (!Schluesselgenerator.isPrime(q))
-                        System.out.println(q + " ist keine Primzahl");
+                if (choice2 == 1){
+
+                    while (!Schluesselgenerator.isPrime(p)) {
+                        p = UserInterface.in.requestBigInt("Geben Sie die Primzahl P ein");
+                        if (!Schluesselgenerator.isPrime(p))
+                            System.out.println(p + " ist keine Primzahl");
+                    }
+
+                    while (!Schluesselgenerator.isPrime(q)) {
+                        q = UserInterface.in.requestBigInt("Geben Sie die Primzahl Q ein");
+                        if (!Schluesselgenerator.isPrime(q))
+                            System.out.println(q + " ist keine Primzahl");
+                    }
+
+
                 }
+                else if (choice2 == 2){
+                    p = Schluesselgenerator.generateProbablePrime();
+                    q = Schluesselgenerator.generateProbablePrime();
+
+                }
+
                 Schluesselgenerator sg = new Schluesselgenerator(p, q);
                 sg.generateKeyPair();
                 System.out.println("Ihr öffentlicher Schlüssel ist: " + sg.printPublicKey());
                 System.out.println("Ihr privater Schlüssel ist: " + sg.printPrivateKey());
             }
-            if (choice == 2) {
+            else if (choice == 2) {
                 String dateipfad = UserInterface.in.requestString("Geben Sie den Dateipfad zur Textdatei ein, die Sie verschlüsseln wollen:");
                 BigInteger e = UserInterface.in.requestBigInt("Geben Sie e des öffentlichen Schlüssel ein:");
                 BigInteger g = UserInterface.in.requestBigInt("Geben Sie g des öffentlichen Schlüssel ein:");
@@ -46,15 +59,15 @@ public class Main {
             }
 
 
-            if (choice == 3) {
+            else if (choice == 3) {
                 String dateipfad =UserInterface.in.requestString("Geben Sie den Dateipfad zur Textdatei ein, die Sie entschlüsseln wollen:");
-                BigInteger e = UserInterface.in.requestBigInt("Geben Sie e des privaten Schlüssel ein:");
+                BigInteger e = UserInterface.in.requestBigInt("Geben Sie d des privaten Schlüssel ein:");
                 BigInteger g = UserInterface.in.requestBigInt("Geben Sie g des privaten Schlüssel ein:");
                 Decoder de = new Decoder(e, g);
                 de.decodeFile(dateipfad);
             }
 
-            if (choice == 4) {
+            else if (choice == 4) {
                 System.exit(1);
             }
         }

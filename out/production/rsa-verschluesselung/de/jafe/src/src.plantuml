@@ -9,6 +9,7 @@ class Schluesselgenerator {
   +Schluesselgenerator(BigInteger p, BigInteger q)
   +void generateKeyPair()
   +static boolean isPrime(BigInteger number)
+  +static BigInteger generateProbablePrime()
   +String printPublicKey()
   +String printPrivateKey()
 }

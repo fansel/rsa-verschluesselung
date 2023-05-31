@@ -29,11 +29,11 @@ public class Encoder {
 
     /**
      * Liest eine Datei ein und speichert die Zeichenwerte in einer Liste.
-     * @param fileName der Name der Datei
+     * @param dateipfad der Name der Datei
      */
-    private void readFile(String fileName) {
+    private void readFile(String dateipfad) {
         //check if file exists
-        Path path = Paths.get(fileName);
+        Path path = Paths.get(dateipfad);
         if (!Files.exists(path)) {
             System.out.println("Diese Datei existiert nicht!");
             return;
@@ -64,17 +64,19 @@ public class Encoder {
     }
     /**
      * Verschlüsselt eine Datei.
-     * @param fileName der Name der Datei
+     * @param dateipfad der Name der Datei
      */
-    public void encode(String fileName) {
-        readFile(fileName);
-        if (charValues == null) {
+    public void encode(String dateipfad) {
+        readFile(dateipfad);
+        if (charValues == null || charValues.isEmpty()) {
+            System.out.println("Die Datei konnte nicht eingelesen werden!");
             return;
         }
         charValues = charValues.stream()
                 .map(value -> value.modPow(e, g))
                 .collect(Collectors.toList());
-        writeToFile("Files/encoded.enc");
+        String fileName = dateipfad.substring(0, dateipfad.lastIndexOf('.')) + ".enc";
+        writeToFile(fileName);
     }
 
     /**
