@@ -2,7 +2,7 @@ package de.jafe.src;
 import de.oop2023.util.UserInterface;
 
 import java.math.BigInteger;
-import java.util.Scanner;
+
 
 /**
  * Die Klasse Main ermöglicht das Generieren von Schlüsselpaaren und das Verschlüsseln und Entschlüsseln von Dateien.
@@ -25,16 +25,16 @@ public class Main {
                 BigInteger q = BigInteger.valueOf(1);
                 if (choice2 == 1){
 
-                    while (!Schluesselgenerator.isPrime(p)) {
+                    while (!Schluesselgenerator.isValidPrime(p)) {
                         p = UserInterface.in.requestBigInt("Geben Sie die Primzahl P ein");
-                        if (!Schluesselgenerator.isPrime(p))
-                            System.out.println(p + " ist keine Primzahl");
+                        if (!Schluesselgenerator.isValidPrime(p))
+                            System.out.println(p + " ist keine Primzahl oder zu klein (min. 256)");
                     }
 
-                    while (!Schluesselgenerator.isPrime(q)) {
+                    while (!Schluesselgenerator.isValidPrime(q)) {
                         q = UserInterface.in.requestBigInt("Geben Sie die Primzahl Q ein");
-                        if (!Schluesselgenerator.isPrime(q))
-                            System.out.println(q + " ist keine Primzahl");
+                        if (!Schluesselgenerator.isValidPrime(q))
+                            System.out.println(q + " ist keine Primzahl oder zu klein (min. 256)");
                     }
 
 
@@ -51,7 +51,14 @@ public class Main {
                 System.out.println("Ihr privater Schlüssel ist: " + sg.printPrivateKey());
             }
             else if (choice == 2) {
-                String dateipfad = UserInterface.in.requestString("Geben Sie den Dateipfad zur Textdatei ein, die Sie verschlüsseln wollen:");
+                String dateipfad = "";
+                do {
+                    dateipfad = UserInterface.in.requestString("Geben Sie den Dateipfad zur Textdatei ein, die Sie verschlüsseln wollen:");
+                    if (!Encoder.checkFile(dateipfad))
+                        System.out.println("Die Datei existiert nicht!");
+                } while (!Encoder.checkFile(dateipfad));
+
+
                 BigInteger e = UserInterface.in.requestBigInt("Geben Sie e des öffentlichen Schlüssel ein:");
                 BigInteger g = UserInterface.in.requestBigInt("Geben Sie g des öffentlichen Schlüssel ein:");
                 Encoder en = new Encoder(e, g);
@@ -60,7 +67,12 @@ public class Main {
 
 
             else if (choice == 3) {
-                String dateipfad =UserInterface.in.requestString("Geben Sie den Dateipfad zur Textdatei ein, die Sie entschlüsseln wollen:");
+                String dateipfad = "";
+                do {
+                    dateipfad = UserInterface.in.requestString("Geben Sie den Dateipfad zur Textdatei ein, die Sie verschlüsseln wollen:");
+                    if (!Encoder.checkFile(dateipfad))
+                        System.out.println("Die Datei existiert nicht!");
+                } while (!Encoder.checkFile(dateipfad));
                 BigInteger e = UserInterface.in.requestBigInt("Geben Sie d des privaten Schlüssel ein:");
                 BigInteger g = UserInterface.in.requestBigInt("Geben Sie g des privaten Schlüssel ein:");
                 Decoder de = new Decoder(e, g);

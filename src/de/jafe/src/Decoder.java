@@ -3,6 +3,7 @@ package de.jafe.src;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,16 +45,24 @@ public class Decoder {
     }
 
     /**
+     * Überprüft, ob eine Datei existiert.
+     * @param dateipfad
+     * @return true, wenn die Datei existiert, false, wenn nicht
+     */
+    public static boolean checkFile(String dateipfad) {
+        Path path = Paths.get(dateipfad);
+        if (!Files.exists(path)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Entschlüsselt eine Datei.
      * @param path der Pfad zur Datei
      */
     public void decodeFile(String path) {
 
-
-        if (!Files.exists(Paths.get(path))) {
-            System.out.println("Diese Datei existiert nicht!");
-            return;
-        }
         if (!path.endsWith(".enc")) {
             System.out.println("Diese Datei kann nicht entschlüsselt werden!");
             return;

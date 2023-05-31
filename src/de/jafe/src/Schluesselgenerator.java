@@ -44,7 +44,7 @@ public class Schluesselgenerator {
      * @param number die zu überprüfende Zahl
      * @return true, wenn die Zahl eine Primzahl ist, sonst false
      */
-    public static boolean isPrime(BigInteger number) {
+    public static boolean isValidPrime(BigInteger number) {
         if (number.equals(BigInteger.ONE) || number.equals(BigInteger.ZERO)) {
             return false;
         }
@@ -52,6 +52,9 @@ public class Schluesselgenerator {
             if (number.mod(i).equals(BigInteger.ZERO)) {
                 return false;
             }
+        }
+        if (number.compareTo(BigInteger.valueOf(256)) < 0) {
+            return false;
         }
         return true;
     }
@@ -61,7 +64,7 @@ public class Schluesselgenerator {
      * @return eine zufällige Primzahl der Bitlänge 512
      */
     public static BigInteger generateProbablePrime(){
-        return BigInteger.probablePrime(512, new java.util.Random());
+        return BigInteger.probablePrime(16, new java.util.Random());
     }
 
 

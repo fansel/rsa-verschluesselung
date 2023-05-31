@@ -34,10 +34,7 @@ public class Encoder {
     private void readFile(String dateipfad) {
         //check if file exists
         Path path = Paths.get(dateipfad);
-        if (!Files.exists(path)) {
-            System.out.println("Diese Datei existiert nicht!");
-            return;
-        }
+
         try {
             charValues = Files.readAllLines(path).stream()
                     .map(line -> line + System.lineSeparator()) // add new line character
@@ -77,6 +74,19 @@ public class Encoder {
                 .collect(Collectors.toList());
         String fileName = dateipfad.substring(0, dateipfad.lastIndexOf('.')) + ".enc";
         writeToFile(fileName);
+    }
+
+    /**
+     * Überprüft, ob eine Datei existiert.
+     * @param dateipfad
+     * @return true, wenn die Datei existiert, false, wenn nicht
+     */
+    public static boolean checkFile(String dateipfad) {
+        Path path = Paths.get(dateipfad);
+        if (!Files.exists(path)) {
+            return false;
+        }
+        return true;
     }
 
     /**

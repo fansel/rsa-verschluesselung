@@ -1,1 +1,23 @@
-hallo, dieser text wird verschlüsselt!3
+                                                      ,--------------------------------.                                                          
+                                                      |Main                            |                                                          
+                                                      |--------------------------------|                                                          
+                                                      |+static void main(String[] args)|                                                          
+                                                      `--------------------------------'                                                          
+                                                                       |                                                                          
+                                                                       |                                                                          
+,------------------------------------------------.                     |                                                                          
+|Schluesselgenerator                             |                     |                                                                          
+|------------------------------------------------|  ,------------------------------------.                                                        
+|-BigInteger p                                   |  |Encoder                             |   ,---------------------------------------------------.
+|-BigInteger q                                   |  |------------------------------------|   |Decoder                                            |
+|-BigInteger g                                   |  |-List<BigInteger> charValues        |   |---------------------------------------------------|
+|-BigInteger e                                   |  |-BigInteger e                       |   |-BigInteger d                                      |
+|-BigInteger d                                   |  |-BigInteger g                       |   |-BigInteger g                                      |
+|-BigInteger phi_g                               |  |+Encoder(BigInteger e, BigInteger g)|   |+Decoder(BigInteger d, BigInteger g)               |
+|+Schluesselgenerator(BigInteger p, BigInteger q)|  |-void readFile(String fileName)     |   |+void printDecoded(List<BigInteger> entschluesseln)|
+|+void generateKeyPair()                         |  |+List<BigInteger> getCharValues()   |   |+void decodeFile(String path)                      |
+|+static boolean isValidPrime(BigInteger number) |  |+void encode(String fileName)       |   `---------------------------------------------------'
+|+static BigInteger generateProbablePrime()      |  |-void writeToFile(String fileName)  |                                                        
+|+String printPublicKey()                        |  `------------------------------------'                                                        
+|+String printPrivateKey()                       |                                                                                                
+`------------------------------------------------'                                                                                                
